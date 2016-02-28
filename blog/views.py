@@ -2,7 +2,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
-from .models import Post
+from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 
@@ -83,3 +83,6 @@ def comment_remove(request, pk):
     post_pk = comment.post.pk
     comment.delete()
     return redirect('blog.views.post_detail', pk=post_pk)
+
+def approved_comments(self):
+    return self.comments.filter(approved_comment=True)
